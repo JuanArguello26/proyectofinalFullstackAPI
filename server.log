@@ -1,0 +1,8 @@
+2025-11-26T01:58:05.362Z - Método: GET - Ruta: /
+2025-11-26T01:58:11.467Z - Método: GET - Ruta: /productos
+2025-11-26T02:04:35.215Z - Método: POST - Ruta: /productos
+2025-11-26T02:04:42.417Z - Método: GET - Ruta: /productos
+2025-11-26T02:05:56.094Z - Método: PUT - Ruta: /productos?id=1
+2025-11-26T02:05:58.901Z - Método: GET - Ruta: /productos
+2025-11-26T02:08:10.053Z - Método: DELETE - Ruta: /productos?id=1
+2025-11-26T02:08:13.426Z - Método: GET - Ruta: /productos
