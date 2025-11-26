@@ -6,8 +6,8 @@ const mysql = require('mysql2');
 // --- 1. CONFIGURACIÓN BASE DE DATOS ---
 const db = mysql.createConnection({
     host: 'localhost',
-    user: 'root',      // Cambia esto por tu usuario
-    password: '0526',      // Cambia esto por tu contraseña
+    user: 'root',      
+    password: '0526',  
     database: 'tienda_api'
 });
 
@@ -20,14 +20,12 @@ db.connect(err => {
 const logRequest = (method, path) => {
     const logEntry = `${new Date().toISOString()} - Método: ${method} - Ruta: ${path}\n`;
     
-    // Usamos fs.appendFile para añadir el log al final del archivo sin borrar lo anterior
     fs.appendFile('server.log', logEntry, (err) => {
         if (err) console.error('Error escribiendo log:', err);
     });
 };
 
 // --- 3. HELPER PARA LEER EL BODY (POST/PUT) ---
-// Como no usamos Express, debemos leer el stream de datos manualmente
 const getBodyData = (req) => {
     return new Promise((resolve, reject) => {
         let body = '';
@@ -36,7 +34,6 @@ const getBodyData = (req) => {
         });
         req.on('end', () => {
             try {
-                // Si viene vacío, retornamos objeto vacío, si no, parseamos JSON
                 resolve(body ? JSON.parse(body) : {});
             } catch (error) {
                 reject(error);
@@ -47,7 +44,6 @@ const getBodyData = (req) => {
 
 // --- 4. CREACIÓN DEL SERVIDOR ---
 const server = http.createServer(async (req, res) => {
-    // Parsear la URL para obtener query params (?id=1) y pathname
     const parsedUrl = url.parse(req.url, true);
     const path = parsedUrl.pathname;
     const method = req.method;
@@ -67,7 +63,7 @@ const server = http.createServer(async (req, res) => {
         // A) OBTENER TODOS O UNO ESPECÍFICO (GET)
         if (method === 'GET') {
             if (query.id) {
-                // Obtener producto específico (/productos?id=X)
+                // Obtener producto específico 
                 db.query('SELECT * FROM productos WHERE id = ?', [query.id], (err, results) => {
                     if (err) {
                         res.statusCode = 500;
@@ -119,7 +115,7 @@ const server = http.createServer(async (req, res) => {
             }
         }
 
-        // C) ACTUALIZAR PRODUCTO (PUT) - Requiere ?id=X
+        // C) ACTUALIZAR PRODUCTO (PUT) - 
         else if (method === 'PUT') {
             if (!query.id) {
                 res.statusCode = 400;
@@ -148,7 +144,7 @@ const server = http.createServer(async (req, res) => {
             }
         }
 
-        // D) ELIMINAR PRODUCTO (DELETE) - Requiere ?id=X
+        // D) ELIMINAR PRODUCTO (DELETE) - 
         else if (method === 'DELETE') {
             if (!query.id) {
                 res.statusCode = 400;
